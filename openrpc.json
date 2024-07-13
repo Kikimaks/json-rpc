@@ -1,0 +1,96 @@
+{
+    "openrpc": "1.0.0-rc1",
+    "info": {
+        "title": "API json-rpc",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Maks K.",
+            "email": "kikinmaksim&gmail.com"
+        },
+        "description": "Документация для jason-rps",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+        "name": "сервис",
+        "url": "https://mock.open-rpc.org/petstore-1.0.0",
+        "summary": "мок-сервер для теста"
+        }
+    ],
+    "methods": [
+        {
+            "name": "getUser",
+            "summary": "получение объекта пользователя по уникальному идентификатору",
+            "tags": [
+                {
+                    "name": "GET"
+                }
+            ],
+            "params": [
+                {
+                    "name": "userID",
+                    "schema":{
+                        "type": "integer",
+                        "description": "Уникальный идентификатор пользователя",
+                        "title": "Номер пользователя",
+                        "pattern": "non"
+                    }
+                }
+            ],
+            "result":{
+                "name": "result_getUser",
+                "description": "Ответ на запрос получения пользователя по уникальному идентификатору",
+                "schema":{
+                    "type": "object",
+                    "properties": {
+                        "userID": {
+                            "type": "integer",
+                            "description": "Уникальный идентификатор пользователя"
+                        },
+                        "userName": {
+                            "type": "string",
+                            "description": "Имя пользователя"
+                        },
+                        "userMail": {
+                            "type": "string",
+                            "description": "Электронная почта пользователя"
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "code": 200,
+                    "message": "Ok"
+                },
+                {
+                    "code": 404,
+                    "message": "Пользователь с таким ID не найден"
+                }
+            ],
+        "examples": [
+            {
+                "name": "request_getUser",
+                "params": [
+                    {
+                        "name": "userID",
+                        "value": 1
+                    }
+                ],
+                "result":{
+                    "name": "response_getUser",
+                    "value":[
+                        {
+                            "userID": 1,
+                            "userName": "Макс",
+                            "userMail": "kikinmaksim@gmail.com"
+                        }
+                    ]
+                }
+            }
+        ]
+        }
+    ]
+}
