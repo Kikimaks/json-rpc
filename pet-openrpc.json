@@ -1,0 +1,207 @@
+{
+    "openrpc": "1.0.0-rc1",
+    "info": {
+        "contact": {
+            "name": "Maksim K.",
+            "url": "kikinmaksim@gmail.com"
+        },
+        "license": {
+            "name": "mit"
+        },
+        "title": "Спека для pet-project"
+    },
+    "servers": [
+        {
+            "name": "Сервер для тестовых запросов",
+            "url": "https:mok.pet-project.com"
+        }
+    ],
+    "methods": [
+        {
+            "name": "manageSecretData",
+            "tags": [{
+                "name": "manageData"
+            }],
+            "description": "Метод для получения и удаления данных с учётом различных уровней доступа",
+            "params": [
+                {
+                    "name": "action",
+                    "schema": {
+                        "type": "string",
+                        "enum": ["add", "get", "delete"],
+                        "description": "Действие с данными (CRUD)"
+                    },
+                    "required": false
+                },
+                {
+                    "name": "dataID",
+                    "schema": {
+                        "type": "integer",
+                        "description": "Идентификатор данных"
+                    },
+                    "required": false
+                },
+                {
+                    "name": "userData",
+                    "schema": {
+                        "type": "string",
+                        "description": "Данные для добавления (опционально)"
+                    },
+                    "required": false
+                },
+                {
+                    "name": "accessLevel",
+                    "schema": {
+                        "type": "string",
+                        "enum": ["user", "admin", "superAdmin"],
+                        "description": "Пользователь"
+                    },
+                    "required": false
+                }
+            ],
+            "result":{
+                "name": "Data",
+                "schema": {
+                    "type":"object",
+                    "properties": {
+                        "status": {
+                            "type": "string",
+                            "enum": ["success", "failure"],
+                            "description": "Результат запроса"
+                        },
+                        "message": {
+                            "type": "string",
+                            "description": "Сообщение описания результата"
+                        },
+                        "dataID":{
+                            "propertyNames": true,
+                            "title": "dataID",
+                            "pattern": "nil",
+                            "type": "integer",
+                            "description": "Идентификатор кортежа данных"
+                        },
+                        "userData":{
+                            "propertyNames": true,
+                            "title": "userData",
+                            "pattern": "nil",
+                            "type": "string",
+                            "description": "Кортеж данных"
+                        }
+                
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "addData",
+                    "description": "Добавление данных",
+                    "params": [
+                        {
+                            "name": "action",
+                            "description": "Действие",
+                            "value": "add"
+                        },
+                        {
+                            "name": "userData",
+                            "description": "Данные для добавления (опционально)",
+                            "value": "Данные для добавления"
+                        }
+                    ],
+                    "result":{
+                        "name": "objectUser",
+                        "value":[
+                            {
+                                "name": "dataID",
+                                "value": "1"
+                            },
+                            {
+                                "name": "userData",
+                                "value": "Данные для добавления"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "getData",
+                    "description": "Получение данных",
+                    "params": [
+                        {
+                            "name": "action",
+                            "description": "Действие",
+                            "value": "get"
+                        },
+                        {
+                            "name": "dataID",
+                            "description": "Уникальный идентификатор",
+                            "value": "1"
+                        }
+                    ],
+                    "result":{
+                        "name": "getObjUser",
+                        "description": "Объект пользователя",
+                        "value":[
+                            {
+                                "name": "userData",
+                                "value": "Данные" 
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "delData",
+                    "description": "Удалить объект",
+                    "params": [
+                        {
+                            "name": "action",
+                            "description": "Действие",
+                            "value": "del"
+                        },
+                        {
+                            "name": "dataID",
+                            "value": "1"
+                        }
+                    ],
+                    "result":{
+                        "name": "delObject",
+                        "description": "Удаление объекта",
+                        "value":[
+                            {
+                                "name": "dataID",
+                                "value": "1"                            
+                            },
+                            {
+                                "name": "message",
+                                "value":"success"
+                            }
+                        ]
+                    }
+                }
+        ],
+            "errors": [
+                {
+                    "name": "OkId",
+                    "code": 200,
+                    "message": "Ok",
+                    "data":{
+                        "type": "string"
+                    }
+                },
+                {
+                    "code": 400,
+                    "message": "Неверный запрос"
+                },
+                {
+                    "code": 403,
+                    "message": "Ошибка доступа"
+                },
+                {
+                    "code": 404,
+                    "message": "Объект не найден"
+                }
+            ]
+
+        }
+    ]
+}
+
+
