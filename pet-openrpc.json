@@ -64,6 +64,15 @@
                 "schema": {
                     "type":"object",
                     "properties": {
+                        "status": {
+                            "type": "string",
+                            "enum": ["success", "failure"],
+                            "description": "Результат запроса"
+                        },
+                        "message": {
+                            "type": "string",
+                            "description": "Сообщение описания результата"
+                        },
                         "dataID":{
                             "propertyNames": true,
                             "title": "dataID",
@@ -93,19 +102,9 @@
                             "value": "add"
                         },
                         {
-                            "name": "dataID",
-                            "description": "Идентификатор данных",
-                            "value": 1
-                        },
-                        {
                             "name": "userData",
                             "description": "Данные для добавления (опционально)",
                             "value": "Данные для добавления"
-                        },
-                        {
-                            "name": "accessLevel",
-                            "description": "Пользователь",
-                            "value": "user"
                         }
                     ],
                     "result":{
@@ -117,15 +116,75 @@
                             },
                             {
                                 "name": "userData",
-                                "value": "Данные"
+                                "value": "Данные для добавления"
                             }
                         ]
                     }
-                }],
+                },
+                {
+                    "name": "getData",
+                    "description": "Получение данных",
+                    "params": [
+                        {
+                            "name": "action",
+                            "description": "Действие",
+                            "value": "get"
+                        },
+                        {
+                            "name": "dataID",
+                            "description": "Уникальный идентификатор",
+                            "value": "1"
+                        }
+                    ],
+                    "result":{
+                        "name": "getObjUser",
+                        "description": "Объект пользователя",
+                        "value":[
+                            {
+                                "name": "userData",
+                                "value": "Данные" 
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "delData",
+                    "description": "Удалить объект",
+                    "params": [
+                        {
+                            "name": "action",
+                            "description": "Действие",
+                            "value": "del"
+                        },
+                        {
+                            "name": "dataID",
+                            "value": "1"
+                        }
+                    ],
+                    "result":{
+                        "name": "delObject",
+                        "description": "Удаление объекта",
+                        "value":[
+                            {
+                                "name": "dataID",
+                                "value": "1"                            
+                            },
+                            {
+                                "name": "message",
+                                "value":"success"
+                            }
+                        ]
+                    }
+                }
+        ],
             "errors": [
                 {
+                    "name": "OkId",
                     "code": 200,
-                    "message": "Ok"
+                    "message": "Ok",
+                    "data":{
+                        "type": "string"
+                    }
                 },
                 {
                     "code": 400,
@@ -144,3 +203,5 @@
         }
     ]
 }
+
+
